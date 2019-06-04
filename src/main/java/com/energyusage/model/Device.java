@@ -61,7 +61,7 @@ public class Device {
         this.energy_consumption = energy_consumption;
     }
 
-    public double getTime() {
+    public int getTime() {
         return time;
     }
 

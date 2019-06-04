@@ -46,7 +46,7 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="add">Add</a></li>
-        <li><a href="delete_all">Delete</a></li>
+        <li><a href="delete_all">Delete all</a></li>
     </ul>
     <hr />
     <h1>Energy usage calculator</h1>
@@ -57,7 +57,6 @@
                 <th>Name</th>
                 <th>Energy Consumption [W]</th>
                 <th>Time [minutes/day]</th>
-                <th> </th>
             </tr>
             <c:forEach items="${deviceList}" var="device">
                 <tr>
@@ -65,18 +64,33 @@
                     <td><c:out value="${device.name}" /></td>
                     <td><c:out value="${device.energy_consumption}" /></td>
                     <td><c:out value="${device.time}" /></td>
-                    <td><button><a href="delete/${device.id}">X</a></button></td>
+                    <td><a href="delete/${device.id}"><button>Delete</button></a><a href="modify/${device.id}"><button>Modify</button></a></td>
                 </tr>
             </c:forEach>
         </table>
+        <br />
+        <hr />
+
         <h2>Daily usage is: <fmt:formatNumber type="number" maxFractionDigits="4" value="${usage}"/>[kWh]</h2>
         <h2>Weekly usage is: <fmt:formatNumber type="number" maxFractionDigits="4" value="${usage * 7}"/>[kWh]</h2>
         <h2>Monthly usage is: <fmt:formatNumber type="number" maxFractionDigits="4" value="${usage * 30}"/>[kWh]</h2>
 
-        <h3>Daily cost is: <fmt:formatNumber type="number" maxFractionDigits="4" value="${usage * 0.55}"/>zl</h3>
-        <h3>Weekly cost is: <fmt:formatNumber type="number" maxFractionDigits="4" value="${usage * 7 * 0.55}"/>zl</h3>
-        <h3>Monthly cost is: <fmt:formatNumber type="number" maxFractionDigits="4" value="${usage * 30 * 0.55}"/>zl</h3>
+        <hr />
+        <br />
+        <form method="get" action="/">
+            <b>Price [per kWh]: </b><input type="text" name="price" />
+            <input type="submit" value="Set price" />
+        </form>
+        <c:if test="${!empty price}">
+            <h3>Daily cost is: <fmt:formatNumber type="number" maxFractionDigits="2" value="${usage * price}"/>zl</h3>
+            <h3>Weekly cost is: <fmt:formatNumber type="number" maxFractionDigits="2" value="${usage * 7 * price}"/>zl</h3>
+            <h3>Monthly cost is: <fmt:formatNumber type="number" maxFractionDigits="2" value="${usage * 30 * price}"/>zl</h3>
+        </c:if>
+        <c:if test="${empty price}">
+            <h3>Add price to calculate cost.</h3>
+        </c:if>
     </c:if>
+
     <c:if test="${empty deviceList}">
         <h2>Add device to calculate energy usage</h2>
     </c:if>

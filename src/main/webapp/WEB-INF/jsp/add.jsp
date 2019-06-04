@@ -29,8 +29,9 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/add">Add</a></li>
-        <li><a href="/delete">Delete</a></li>
+        <li><a href="/delete_all">Delete all</a></li>
     </ul>
+    <hr />
     <h1>Add device to database</h1>
     <form method="post" action="/added">
         <table>
@@ -39,11 +40,11 @@
                 <td><input type="text" name="name" /></td>
             </tr>
             <tr>
-                <td style="font-weight: bold">Energy consumption [W]</td>
+                <td style="font-weight: bold">Energy consumption [W]:</td>
                 <td><input type="text" name="energy_consumption" /></td>
             </tr>
             <tr>
-                <td style="font-weight: bold">Time usage [minutes/day]</td>
+                <td style="font-weight: bold">Time usage [minutes/day]:</td>
                 <td><input type="text" name="time" /></td>
             </tr>
             <tr>

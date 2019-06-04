@@ -29,8 +29,9 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/add">Add</a></li>
-        <li><a href="/delete">Delete</a></li>
+        <li><a href="/delete_all">Delete all</a></li>
     </ul>
+    <hr />
     <h1>Details about current device</h1>
     <table>
         <tr>
