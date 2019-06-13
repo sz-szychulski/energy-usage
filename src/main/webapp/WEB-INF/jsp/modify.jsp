@@ -31,6 +31,7 @@
         <li><a href="/add">Add</a></li>
         <li><a href="/delete_all">Delete all</a></li>
     </ul>
+    <hr />
     <h1>Modify current device</h1>
     <form method="post" action="/modified/${id}">
         <table>

@@ -53,14 +53,12 @@
     <c:if test="${!empty deviceList}">
         <table>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Energy Consumption [W]</th>
                 <th>Time [minutes/day]</th>
             </tr>
             <c:forEach items="${deviceList}" var="device">
                 <tr>
-                    <td><c:out value="${device.id}" /></td>
                     <td><c:out value="${device.name}" /></td>
                     <td><c:out value="${device.energy_consumption}" /></td>
                     <td><c:out value="${device.time}" /></td>
@@ -77,8 +75,8 @@
 
         <hr />
         <br />
-        <form method="get" action="/">
-            <b>Price [per kWh]: </b><input type="text" name="price" />
+        <form method="post" action="/set_price">
+            <b>Price [per kWh]: </b><input type="number" name="price" id="price" step="any"/>
             <input type="submit" value="Set price" />
         </form>
         <c:if test="${!empty price}">
@@ -94,5 +92,17 @@
     <c:if test="${empty deviceList}">
         <h2>Add device to calculate energy usage</h2>
     </c:if>
+
+    <script>
+        var price = document.getElementById("price");
+
+        price.addEventListener("input", function (event) {
+            if (price.validity.typeMismatch) {
+                price.setCustomValidity("I expect number value!");
+            } else {
+                price.setCustomValidity("");
+            }
+        });
+    </script>
 </body>
 </html>

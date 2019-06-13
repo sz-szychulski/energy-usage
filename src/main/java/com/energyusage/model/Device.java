@@ -1,6 +1,9 @@
 package com.energyusage.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
@@ -25,15 +28,21 @@ public class Device {
     @Column(name = "id")
     private Long id;
 
+
     @Column(name = "name")
     @NotEmpty(message = "*Please provide name of device")
     private String name;
 
+
     @Column(name = "energy_consumption")
+    @NotEmpty(message = "*Please provide energy consumption of device")
+    @Digits(integer = 11, fraction = 0)
     @Min(1)
     private int energy_consumption;
 
     @Column(name = "time")
+    @NotEmpty(message = "*Please provide time of device usage")
+    @Digits(integer = 11, fraction = 0)
     @Min(1)
     private int time;
 

@@ -43,11 +43,6 @@ public class DeviceServiceImpl implements DeviceService{
     }
 
     @Override
-    public long countDevices() {
-        return deviceRepository.count();
-    }
-
-    @Override
     public void deleteAllDevices() {
         deviceRepository.deleteAll();
     }

@@ -1,12 +1,16 @@
 package com.energyusage.controller;
 
 import com.energyusage.model.Device;
+import com.energyusage.model.Price;
 import com.energyusage.service.DeviceService;
+import com.energyusage.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -15,12 +19,17 @@ public class DeviceController {
     @Autowired
     DeviceService deviceService;
 
+    @Autowired
+    PriceService priceService;
+
     @RequestMapping(value = "/",  method = RequestMethod.GET)
-    public String showIndex(@RequestParam(value = "price", required = false) Double price,
-                            ModelMap model) {
+    public String showIndex(ModelMap model) {
         model.addAttribute("deviceList", deviceService.getAllDevices());
         model.addAttribute("usage", deviceService.calculateUsage());
-        model.addAttribute("price", price);
+
+        if (priceService.getPrice().size() > 0) {
+            model.addAttribute("price", priceService.getPrice().get(0).getPriceValue());
+        }
         return "index";
     }
 
@@ -36,18 +45,7 @@ public class DeviceController {
                         ModelMap model) {
         Device device = new Device(name, energy_consumption, time);
         deviceService.createDevice(device);
-        return "redirect:/device/" + device.getId();
-    }
-
-
-    @RequestMapping(value = "/device/{id}", method = RequestMethod.GET)
-    public String showDevice(@PathVariable("id") Long id, ModelMap model){
-        Device device = deviceService.getDevice(id);
-        model.addAttribute("id", device.getId());
-        model.addAttribute("name", device.getName());
-        model.addAttribute("energy_consumption", device.getEnergy_consumption());
-        model.addAttribute("time", device.getTime());
-        return "device";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/delete_all", method = RequestMethod.GET)
@@ -83,7 +81,16 @@ public class DeviceController {
         device.setEnergy_consumption(energy_consumption);
         device.setTime(time);
         deviceService.editDevice(device);
-        return "redirect:/device/" + device.getId();
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "set_price", method = RequestMethod.POST)
+    public String setPrice(@RequestParam("price") Double priceValue,
+                           ModelMap model) {
+        priceService.deletePrice();
+        Price price = new Price(priceValue);
+        priceService.createPrice(price);
+        return "redirect:/";
     }
 
 }

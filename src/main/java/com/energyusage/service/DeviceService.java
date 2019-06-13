@@ -10,7 +10,6 @@ public interface DeviceService {
     Device getDevice(Long id);
     void deleteDevice(Device device);
     List<Device> getAllDevices();
-    long countDevices();
     void deleteAllDevices();
     double calculateUsage();
 }
