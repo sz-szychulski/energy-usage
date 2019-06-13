@@ -37,21 +37,49 @@
         <table>
             <tr>
                 <td style="font-weight: bold">Name: </td>
-                <td><input type="text" name="name" /></td>
+                <td><input type="text" name="name" required/></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">Energy consumption [W]:</td>
-                <td><input type="text" name="energy_consumption" /></td>
+                <td><input type="number" name="energy_consumption" min="1" required/></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">Time usage [minutes/day]:</td>
-                <td><input type="text" name="time" /></td>
+                <td><input type="number" name="time" min="1" required/></td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Add Device" /></td>
             </tr>
         </table>
     </form>
+    <script>
+        var name = document.getElementById("name");
+        var energy_consumption = document.getElementById("energy_consumption");
+        var time = document.getElementById("time");
 
+        name.addEventListener("input", function (event) {
+            if (name.validity.typeMismatch) {
+                name.setCustomValidity("I expect text!");
+            } else {
+                name.setCustomValidity("");
+            }
+        });
+
+        energy_consumption.addEventListener("input", function (event) {
+            if (energy_consumption.validity.typeMismatch) {
+                energy_consumption.setCustomValidity("I expect number here!")
+            } else {
+                energy_consumption.setCustomValidity("");
+            }
+        });
+
+        time.addEventListener("input", function (event) {
+            if (time.validity.typeMismatch) {
+                time.setCustomValidity("I expect number here!")
+            } else {
+                time.setCustomValidity("")
+            }
+        });
+    </script>
 </body>
 </html>
